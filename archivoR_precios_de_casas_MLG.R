@@ -6,11 +6,11 @@ library(bestglm)
 library(lmtest)
 library(corrplot)
 library(olsrr)
-library(patchwork) #unir gr·ficos
+library(patchwork) #unir gr√°ficos
 options(warn=-1)
 options(scipen = 999) 
 
-df<-read.csv("C:/Users/ricar/Desktop/SEMESTRE 8/Modelos lineales generalizados/5. Trabajo/train.csv",header=TRUE,sep=",")
+df<-read.csv("train.csv",header=TRUE,sep=",")
 head(df)
 
 df<-subset(df, select = c(LotFrontage, LotArea, OverallQual,OverallCond,YearBuilt,
@@ -19,7 +19,7 @@ df<-subset(df, select = c(LotFrontage, LotArea, OverallQual,OverallCond,YearBuil
                           Fireplaces,SalePrice) )
 head(df)
 
-df$YearBuilt<-2022-df$YearBuilt ##para convertir a aÒos de antiguedad
+df$YearBuilt<-2022-df$YearBuilt ##para convertir a a√±os de antiguedad
 df$YearRemodAdd<-2022-df$YearRemodAdd ##lo mismo
 
 df$LotFrontage<-0.3048*df$LotFrontage ## para pasar de medida pies a metros
@@ -29,34 +29,34 @@ df$GrLivArea<-(0.3048**2)*df$GrLivArea ## pies a metros
 g1<-ggplot(df, aes(x = OverallQual)) +
   geom_bar(fill="blue") +
   theme_bw()+
-  xlab("CalificaciÛn material/acabado casa") + ylab("Cantidad")+
-  ggtitle("CalificaciÛn de material y acabado") + 
+  xlab("Calificaci√≥n material/acabado casa") + ylab("Cantidad")+
+  ggtitle("Calificaci√≥n de material y acabado") + 
   theme(plot.title = element_text(hjust = 0.5)) 
 g2<-ggplot(df, aes(x = OverallCond)) +
   geom_bar(fill="blue") +
   theme_bw()+
-  xlab("CalificaciÛn estado general de la casa") + ylab("Cantidad")+
-  ggtitle("CalificaciÛn de estado general casa") + 
+  xlab("Calificaci√≥n estado general de la casa") + ylab("Cantidad")+
+  ggtitle("Calificaci√≥n de estado general casa") + 
   theme(plot.title = element_text(hjust = 0.5)) 
 g3<-ggplot(df, aes(x = BsmtFullBath)) +
   geom_bar(fill="red") +
   theme_bw()+
-  xlab("BaÒos completos en sÛtano") + ylab("Cantidad")+
-  ggtitle("BaÒos completos en sÛtano en casa") + 
+  xlab("Ba√±os completos en s√≥tano") + ylab("Cantidad")+
+  ggtitle("Ba√±os completos en s√≥tano en casa") + 
   theme(plot.title = element_text(hjust = 0.5)) 
 g4<-ggplot(df, aes(x = FullBath)) +
   geom_bar(fill="red") +
   theme_bw()+
-  xlab("BaÒos completos") + ylab("Cantidad")+
-  ggtitle("BaÒos completos en casa") + 
+  xlab("Ba√±os completos") + ylab("Cantidad")+
+  ggtitle("Ba√±os completos en casa") + 
   theme(plot.title = element_text(hjust = 0.5)) 
 (g1+g2)/(g3+g4)
 
 g5<-ggplot(df, aes(x = HalfBath)) +
   geom_bar(fill="blue")  +
   theme_bw()+
-  xlab("Medios baÒos") + ylab("Cantidad")+
-  ggtitle("Cantidad de medios baÒos en casa") + 
+  xlab("Medios ba√±os") + ylab("Cantidad")+
+  ggtitle("Cantidad de medios ba√±os en casa") + 
   theme(plot.title = element_text(hjust = 0.5)) 
 
 g6<-ggplot(df, aes(x = TotRmsAbvGrd)) +
@@ -70,7 +70,7 @@ g7<-ggplot(df, aes(x = Fireplaces)) +
   geom_bar(fill="brown")  +
   theme_bw()+
   xlab("Chimeneas en la casa") + ylab("Cantidad")+
-  ggtitle("N˙mero de chimeneas en la casa") + 
+  ggtitle("N√∫mero de chimeneas en la casa") + 
   theme(plot.title = element_text(hjust = 0.5)) 
 
 (g5+g7)/g6
@@ -91,7 +91,7 @@ sqrt(var(df["HalfBath"]))
 sqrt(var(df["TotRmsAbvGrd"]))
 sqrt(var(df["Fireplaces"]))
 
-corsp<-cor(x=df[c(3,4,8,9,10,11,12,13)],method="spearman",use = "complete.obs") #CorrelaciÛn
+corsp<-cor(x=df[c(3,4,8,9,10,11,12,13)],method="spearman",use = "complete.obs") #Correlaci√≥n
 corrplot(corsp,method="number")
 
 ###################DATOS CONTINUOS#########################
@@ -106,7 +106,7 @@ g2<-ggplot(df, aes(x = LotFrontage)) +
   xlab("Metros lineales de calle conectados a la casa") 
 g1+g2
 
-subset(df,df$LotFrontage>40) #analizar valores atÌpicos
+subset(df,df$LotFrontage>40) #analizar valores at√≠picos
 
 g1<-ggplot(df, aes(x = LotArea)) +
   geom_histogram(fill="purple") +
@@ -124,23 +124,23 @@ subset(df,df$LotArea>20000)
 g1<-ggplot(df, aes(x = YearBuilt)) +
   geom_histogram(fill="orange") +
   theme_bw()+
-  xlab("AÒos de antig¸edad desde construcciÛn") + ylab("Frecuencia") + 
+  xlab("A√±os de antig√ºedad desde construcci√≥n") + ylab("Frecuencia") + 
   theme(plot.title = element_text(hjust = 0.5))
 g2<-ggplot(df, aes(x = YearBuilt)) +
   geom_boxplot(col="orange")  +
   theme_bw()+
-  xlab("AÒos de antig¸edad desde construcciÛn") 
+  xlab("A√±os de antig√ºedad desde construcci√≥n") 
 g1+g2
 
 g3<-ggplot(df, aes(x = YearRemodAdd)) +
   geom_histogram(fill="red") +
   theme_bw()+
-  xlab("AÒos de antig¸edad desde ˙ltima remodelaciÛn") + ylab("Frecuencia")+
+  xlab("A√±os de antig√ºedad desde √∫ltima remodelaci√≥n") + ylab("Frecuencia")+
   theme(plot.title = element_text(hjust = 0.5))
 g4<-ggplot(df, aes(x = YearRemodAdd)) +
   geom_boxplot(col="red")  +
   theme_bw()+
-  xlab("AÒos de antig¸edad desde ˙ltima remodelaciÛn") 
+  xlab("A√±os de antig√ºedad desde √∫ltima remodelaci√≥n") 
 (g1+g2)/(g3+g4)
 
 g1<-ggplot(df, aes(x = GrLivArea)) +
@@ -171,7 +171,7 @@ g1+g2
 CV1<-sd(df["SalePrice"][df["SalePrice"]<150000]) /  mean(df["SalePrice"][df["SalePrice"]<150000])
 CV2<-sd(df["SalePrice"][df["SalePrice"]<300000 & df["SalePrice"]>150000]) /  mean(df["SalePrice"][df["SalePrice"]<300000 & df["SalePrice"]>150000])
 CV3<-sd(df["SalePrice"][df["SalePrice"]>300000]) /  mean(df["SalePrice"][df["SalePrice"]>300000])
-cat("Los coef. de variaciÛn son: ",CV1,CV2,CV3)
+cat("Los coef. de variaci√≥n son: ",CV1,CV2,CV3)
 
 g1<-ggplot(df, aes(x = SalePrice)) +
   geom_histogram(fill="white",col="blue") +
@@ -206,7 +206,7 @@ summary(df["YearRemodAdd"])
 summary(df["GrLivArea"])
 summary(df["SalePrice"])
 
-cor<-cor(x=df[c(1,2,5,6,7,13)],method="pearson",use = "complete.obs") #CorrelaciÛn
+cor<-cor(x=df[c(1,2,5,6,7,13)],method="pearson",use = "complete.obs") #Correlaci√≥n
 corrplot(cor,method="number")
 
 ###########################procesamiento de modelos##############
@@ -232,11 +232,11 @@ mod3<-glm(SalePrice~LotFrontage+LotArea+OverallQual+OverallCond+YearBuilt+YearRe
 summary(mod3)
 
 
-###################An·lisis residual#############################
+###################An√°lisis residual#############################
 par(mfrow=c(2,2))
 plot(resid(mod1,type="response"), col='gray',main="Residuos de modelo Gamma con enlace identidad",xlab="Indice",ylab="Residuos")
 abline(0,0,col="red")
-plot(mod2$residuals, col='gray',main="Residuos de modelo Gamma con enlace logarÌtmico",xlab="Indice",ylab="Residuos")
+plot(mod2$residuals, col='gray',main="Residuos de modelo Gamma con enlace logar√≠tmico",xlab="Indice",ylab="Residuos")
 abline(0,0,col="red")
 plot(mod3$residuals, col='gray',main="Residuos de modelo Gamma con enlace inverso",xlab="Indice",ylab="Residuos")
 abline(0,0,col="red")
@@ -262,16 +262,16 @@ dwtest(mod3, alternative = "two.sided")
 
 
 
-#######################Gr·ficos#########################
+#######################Gr√°ficos#########################
 par(mfrow=c(2,2))
 plot(density(df$SalePrice),main="Precio de casas con modelo Gamma(Identidad)",xlab="Precio de casa",ylab="Densidad")
 lines(density(predict(mod1, type='response')), col='red')
 legend(400000, 0.000004,legend=c ("Gamma(Identidad)","Precio de casas") , col=c("red","black")
        ,lty =1:1 ,cex =0.8 ,title=expression(paste(bold("Curva"))))
 
-plot(density(df$SalePrice),main="Precio de casas con modelo Gamma(LogarÌtmico)",xlab="Precio de casa",ylab="Densidad")
+plot(density(df$SalePrice),main="Precio de casas con modelo Gamma(Logar√≠tmico)",xlab="Precio de casa",ylab="Densidad")
 lines(density(predict(mod2, type='response')), col='red')
-legend(380000, 0.000004,legend=c ("Gamma(LogarÌtmico)","Precio de casas") , col=c("red","black")
+legend(380000, 0.000004,legend=c ("Gamma(Logar√≠tmico)","Precio de casas") , col=c("red","black")
        ,lty =1:1 ,cex =0.8 ,title=expression(paste(bold("Curva"))))
 
 plot(density(df$SalePrice),main="Precio de casas con modelo Gamma(Inverso)",xlab="Precio de casa",ylab="Densidad")
